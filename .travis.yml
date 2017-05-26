@@ -1,0 +1,12 @@
+sudo: false
+language: node_js
+node_js:
+  - "stable"
+  - "4.1"
+before_install:
+  - npm install gitbook-cli -g
+  - gitbook install
+script:
+  - gitbook build
+notifications:
+  slack: cb-geo:0N3fJy823MGsJvcDB91m4p8H
