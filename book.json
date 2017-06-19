@@ -1,4 +1,3 @@
 {
-  "plugins": ["richquotes"],
-  "plugins": ["heading-anchors"]
+  "plugins": ["richquotes", "heading-anchors"]
 }

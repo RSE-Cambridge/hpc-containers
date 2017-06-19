@@ -4,6 +4,8 @@
 
 Singularity can shell, import, run and exec a Docker image directly.
 
+> **Info** Docker is not required for running Docker images in Singularity.
+
 ```
 singularity shell docker://ubuntu:latest
 singularity run docker://ubuntu:latest
@@ -27,7 +29,7 @@ Just like Docker has the Dockerfile, Singularity has a file called Singularity. 
 
 [Singularity-Hub](https://singularity-hub.org/tools/converter/dockerfile) converts Docker specification file to a Singularity file. 
 
-Singularity does not currently support metadata, and so tags like `MAINTAINER` and `LABEL` are converted to comments.
+> **Warning** Singularity does not currently support metadata, and so tags like `MAINTAINER` and `LABEL` are converted to comments.
 
 Sample Docker file
 
