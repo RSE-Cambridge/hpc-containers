@@ -22,7 +22,11 @@ By default, the container will be mounted as read-only. If you need to make chan
 
     singularity shell --writeable mycontainer.img
 
-which, as long as your user has permission to edit the `mycontainer.img` will let you make changes to the container. In general, it will make most sense to construct your workflows so that the container image is not changed frequently - a containerised application can read and write from files outside the container.
+which, as long as your user has permission to edit the `mycontainer.img` will let you make changes to the container. 
+
+> **Hint** In general, it will make most sense to construct your workflows so that the container image is not changed frequently.
+
+A containerised application can read and write from files outside the container.
 
 ### Accessing data outside the container
 
