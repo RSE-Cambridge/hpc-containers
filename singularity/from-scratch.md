@@ -12,6 +12,8 @@ which, by default, creates an image that contain up to 768Mib. To create an imag
 
 Creating an image requires root access! Therefore we create the image on a machine on which we have root/sudo access - usually your personal workstation or laptop, and in this case you can use the virtual machines at workshop.hpc.cam.ac.uk.
 
+> **Info** Singularity will try to use an image format that does not immediately take up the full allocated size of the container image. If you create a 2048 Mb image then it will (while still empty) actually take up <100Mb and grow dynamically as you add files to the container. This is only possible on some filesystems and is not possible on network filesystems, such as your home directories on the virtual machines or on darwin. Therefore keep the containers in a local filesystem - for example /tmp or /local on the VMs or on darwin.
+
 
 The newly created image will be empty, and to make it useful we need to bootstrap (again, only possible with root privilege) the image by
 
@@ -30,6 +32,8 @@ This uses the yum package manager (installed as part of the operating system *ou
     singularity shell mycontainer.img
 
 which will drop you into a new shell inside the container.
+
+> **Warning** Root access to stuff and network filesystems with `root_squash`.
 
 ### The Singularity definition file
 
