@@ -20,13 +20,15 @@ Sharing a container with a collegue is as simple as giving them access to the co
 
 By default, the container will be mounted as read-only. If you need to make changes to the container (e.g. install new software) then this can be acheived with
 
-    singularity shell --writeable mycontainer.img
+    singularity shell --writable mycontainer.img
 
 which, as long as your user has permission to edit the `mycontainer.img` will let you make changes to the container. 
 
 > **Hint** In general, it will make most sense to construct your workflows so that the container image is not changed frequently.
 
 A containerised application can read and write from files outside the container.
+
+> **Warning** file permissions and users!
 
 ### Accessing data outside the container
 
