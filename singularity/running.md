@@ -1,6 +1,6 @@
 ## Running a Singularity container
 
-A container can be run with 
+A container can be run with
 
     singularity run mycontainer.img
 
@@ -22,7 +22,7 @@ By default, the container will be mounted as read-only. If you need to make chan
 
     singularity shell --writeable mycontainer.img
 
-which, as long as your user has permission to edit the `mycontainer.img` will let you make changes to the container. 
+which, as long as your user has permission to edit the `mycontainer.img` will let you make changes to the container.
 
 > **Hint** In general, it will make most sense to construct your workflows so that the container image is not changed frequently.
 
