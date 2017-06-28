@@ -113,3 +113,20 @@ singularity run /local/lammps.img -i $HOME/in.granregion.mixer
 # or to run the example problem from the Host /lammp directory
 singularity run --bind /lammps:/lammps /local/lammps.img -i /lammps/in.granregion.mixer
 ```
+
+## Writing in the container
+
+While it is discouraged to make tweaks on the fly to containers (you should properly define all edits to the container in a boostrap specification file, shown later) you can add `--writable` to any command to write inside the container. Assuming we have our `centos.img` on our local resource with `sudo`, let’s 
+try to make a `/data` directory:
+
+```shell
+sudo singularity shell --writable centos7.img
+Singularity centos.img:~> mkdir /data
+Singularity centos.img:~> touch /data/foo.txt
+# exit
+# We made the data! And the ! But after we exit, is the file still there?
+singularity exec ~/centos.img ls /data
+#noodles.txt
+``
+> **Info** We would ideally have done this action with bootstrap, discussed next.
+
