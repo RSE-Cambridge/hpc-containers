@@ -30,7 +30,8 @@ root
 ```
 
 ## Workflow
-The Singularity workflow can be split into two: User end point, which requires superuser / root access and a shared computational end point, where a regular user can execute or run singularity images. Singularity requires root access to create a new container, bootstrap/install and modify containers. However, once a Singularity container image is created, it can be executed by a regular users, without the need for privilege escalation.
+
+The general workflow moves from development at the user endpoint to a shared computational resource. The user endpoint is typically a laptop, workstation, or server. In this space the user can create, modify, and update a container as needed. This typically requires superuser privileges or root access. Once a container is created with the necessary applications, libraries and data inside, it can be easily shared to other hosts and executed without having root access. Making changes to the container again requires returning to the endpoint system with root, and reuploading the container to the shared resource.
 
 ![Singularity workflow](workflow.png)
 > Singularity workflow
