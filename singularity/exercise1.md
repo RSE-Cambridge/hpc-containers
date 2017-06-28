@@ -47,3 +47,55 @@ To launch the container as a separate process use `-p` flag
 ```
     singularity exec -p ~/centos.img factor 12345
 ```
+
+### environments
+```shell
+    # How is the shell environment transposed into the container?
+    singularity exec ~/centos.img env
+    singularity exec ~/centos.img env | wc -l
+    env -i singularity exec ~/centos.img env | wc -l
+    env -i FOO=BAR singularity exec ~/centos.img en
+```
+
+
+## Directory access
+By default Singularity tries to create a seamless user experience between the host and the container. To do this, Singularity makes various locations accessible within the container automatically. For example, the user’s home directory is always bound into the container as is `/tmp` and `/var/tmp`. Additionally your current working directory (`cwd/pwd`) is also bound into the container iff it is not an operating system directory or already accessible via another mount. For almost all cases, this will work flawlessly as follows:
+
+```shell
+[z301@training-z301 ~]$ pwd
+/home/z301
+[z301@training-z301 ~]$ singularity shell /local/centos.img 
+#Singularity: Invoking an interactive shell within container...
+
+Singularity centos.img:~> pwd
+#/home/z301
+Singularity centos.img:~> uname -a
+#Linux training-z301 3.10.0-229.el7.x86_64 #1 SMP Fri Mar 6 11:36:42 UTC 2015 x86_64 x86_64 x86_64 GNU/Linux
+Singularity centos.img:~> exit
+```
+
+> **Warning**
+For directory binds to function properly, there must be an existing target endpoint within the container (just like a mount point). This means that if your home directory exists in a non-standard base directory like `/foobar/username` then the base directory `/foobar` must already exist within the container.
+Singularity will not create these base directories! You must enter the container with the `--writable` option being set, and create the directory manually.
+
+
+Files on the host can be reachable from within the container
+
+```shell
+echo "Hello World" > $HOME/hello.txt
+singularity exec ~/centos.img cat $HOME/hello.txt
+Hello World
+```
+
+On a research cluster, you probably want to access locations with big datasets, and then write results too. For this, you will want to bind a folder to the container. Here, we are binding our `/lammps` `/lammps` in the image, and listing the contents to show it worked. We use the command `-B` or `--bind` to do this.
+
+```shell
+# On Host
+sudo mkdir /lammps
+sudo wget -O /lammps/in.granregion.mixer https://goo.gl/axtEQ7
+# Launch container
+singularity shell --bind /lammps:/lammps ~/centos.img
+Singularity centos.img:~> ls -alh /lammps
+in.granregion.mixer
+
+```
