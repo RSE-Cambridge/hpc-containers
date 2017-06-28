@@ -12,6 +12,8 @@ To get more flexibility, running
 
 will spawn a shell inside the containerised environment.
 
+The `exec` Singularity sub-command allows you to spawn an arbitrary command within your container image as if it were running directly on the host system.
+
 ### Sharing containers
 
 Sharing a container with a collegue is as simple as giving them access to the container. This could mean copying the image to them or in a cluster environment, setting the permisions on the image file to let that user read the file.
