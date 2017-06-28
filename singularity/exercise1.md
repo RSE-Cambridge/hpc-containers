@@ -13,8 +13,13 @@ Singularity shell allows you to interact with the container.
 ```shell
    singularity shell ~/centos.img
    singularity centos.img:~/> uname -a
+
    # Check user privileges
    singularity centos.img:~/> whoami
+   # Now try running as root
+   sudo singularity shell ~/centos.img
+   singularity centos.img:~/> whoami
+
    # Create a file in home directory
    singularity centos.img:~/> touch ~/test
 ```
@@ -96,6 +101,15 @@ sudo wget -O /lammps/in.granregion.mixer https://goo.gl/axtEQ7
 # Launch container
 singularity shell --bind /lammps:/lammps ~/centos.img
 Singularity centos.img:~> ls -alh /lammps
-in.granregion.mixer
+#in.granregion.mixer
+```
 
+## Running LAMMPS code
+LAMMPS is a popular Molecular Dynamics code, a Singularity image for LAMMPS code is available in the home directory. To execute the `lammps` directory code:
+
+```shell
+wget -O ./in.granregion.mixer https://goo.gl/axtEQ7
+singularity run /local/lammps.img -i $HOME/in.granregion.mixer 
+# or to run the example problem from the Host /lammp directory
+singularity run --bind /lammps:/lammps /local/lammps.img -i /lammps/in.granregion.mixer
 ```
