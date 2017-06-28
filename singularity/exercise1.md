@@ -4,64 +4,65 @@ A Singularity image of CentOS should be available in your home directory.
 Alternatively, CentOS Singularity container can be pulled
 from [SingularityHub](https://singularity-hub.org).
 ```
-    singularity pull --name centos.img shub://singularityhub/centos
+singularity pull --name centos.img shub://singularityhub/centos
 ```
 
 ## Singularity shell
 Singularity shell allows you to interact with the container.
 
 ```shell
-   singularity shell ~/centos.img
-   singularity centos.img:~/> uname -a
+singularity shell ~/centos.img
+singularity centos.img:~/> uname -a
 
-   # Check user privileges
-   singularity centos.img:~/> whoami
-   # Now try running as root
-   sudo singularity shell ~/centos.img
-   singularity centos.img:~/> whoami
+# Check user privileges
+singularity centos.img:~/> whoami
+# Now try running as root
+sudo singularity shell ~/centos.img
+singularity centos.img:~/> whoami
 
-   # Create a file in home directory
-   singularity centos.img:~/> touch ~/test
+# Create a file in home directory
+singularity centos.img:~/> touch ~/test
 ```
 Singularity auto mounts your home directory, check if a file called `test` is
 created in your home directory. If you want to keep the container’s environment
 contained, meaning no sharing of host environment, use `--contain`
 
 ```shell
-   singularity shell --contain ~/centos.img
-   # create some files in your home, are they persistent?
-   singularity centos.img:~/> touch ~/test
-   singularity centos.img:~/> exit
-   # Contain but define a new directory to use for your home
-   singularity shell --contain --home ~/git ~/centos.img
-   singularity centos.img:~/> touch ~/test
+singularity shell --contain ~/centos.img
+# create some files in your home, are they persistent?
+singularity centos.img:~/> touch ~/test
+singularity centos.img:~/> exit
+# Contain but define a new directory to use for your home
+singularity shell --contain --home ~/git ~/centos.img
+singularity centos.img:~/> touch ~/test
 ```
 
 ## Singularity exec
 To run commands directly from a container, use `singularity exec`:
 ```
-    singularity exec ~/centos.img echo "Hello Singularity!"
-    singularity exec ~/centos.img factor 54321
+singularity exec ~/centos.img echo "Hello Singularity!"
+singularity exec ~/centos.img factor 54321
 ```
 
 To enable debugging, use `--debug` flag
 ```
-    singularity --debug exec ~/centos.img whoami
+singularity --debug exec ~/centos.img whoami
 ```
 To launch the container as a separate process use `-p` flag
 ```
-    singularity exec -p ~/centos.img factor 12345
+singularity exec -p ~/centos.img factor 12345
 ```
 
-### environments
+### Environments
+Singularity passes the Host environment to the container.
+
 ```shell
-    # How is the shell environment transposed into the container?
-    singularity exec ~/centos.img env
-    singularity exec ~/centos.img env | wc -l
-    env -i singularity exec ~/centos.img env | wc -l
-    env -i FOO=BAR singularity exec ~/centos.img en
+# How is the shell environment transposed into the container?
+singularity exec ~/centos.img env
+singularity exec ~/centos.img env | wc -l
+env -i singularity exec ~/centos.img env | wc -l
+env -i FOO=BAR singularity exec ~/centos.img en
 ```
-
 
 ## Directory access
 By default Singularity tries to create a seamless user experience between the host and the container. To do this, Singularity makes various locations accessible within the container automatically. For example, the user’s home directory is always bound into the container as is `/tmp` and `/var/tmp`. Additionally your current working directory (`cwd/pwd`) is also bound into the container iff it is not an operating system directory or already accessible via another mount. For almost all cases, this will work flawlessly as follows:
@@ -123,10 +124,10 @@ try to make a `/data` directory:
 sudo singularity shell --writable centos7.img
 Singularity centos.img:~> mkdir /data
 Singularity centos.img:~> touch /data/foo.txt
-# exit
-# We made the data! And the ! But after we exit, is the file still there?
+Singularity centos.img:~> exit
+# We made data & foo! But after we exit, is the file still there?
 singularity exec ~/centos.img ls /data
-#noodles.txt
-``
+#foo.txt
+```
 > **Info** We would ideally have done this action with bootstrap, discussed next.
 
