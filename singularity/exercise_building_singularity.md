@@ -32,8 +32,8 @@ In this example, we will use `%setup`, `%post` and `%runscript`.
 * Download and copy LAMMPS to `/opt`. Use `$SINGULARITY_ROOTFS` to access root file system in the container:
 
 ```shell
-  cd $SINGULARITY_ROOTFS/opt
-  wget http://lammps.sandia.gov/tars/lammps-stable.tar.gz
+cd $SINGULARITY_ROOTFS/opt
+wget http://lammps.sandia.gov/tars/lammps-stable.tar.gz
 ```
 
 * Install development tools: `yum -y groupinstall "Development Tools"`
@@ -41,19 +41,19 @@ In this example, we will use `%setup`, `%post` and `%runscript`.
 * Configure and compile LAMMPS
 
 ```shell
-  mkdir -p /opt/lammps
-  cd /opt/lammps
-  tar xf ../lammps-stable.tar.gz --strip-components 1
+mkdir -p /opt/lammps
+cd /opt/lammps
+tar xf ../lammps-stable.tar.gz --strip-components 1
 
-  cd src
-  make yes-granular |& tee log.make_yes_granular
-  make -j serial |& tee log.make_serial
+cd src
+make yes-granular |& tee log.make_yes_granular
+make -j serial |& tee log.make_serial
 ```
 
 * Configure the container to run `lmp_serial` on execution of the container:
 
 ```shell
-  /opt/lammps/src/lmp_serial "$@"
+/opt/lammps/src/lmp_serial "$@"
 ```
 
 ## Creating the container image
