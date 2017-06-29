@@ -70,7 +70,7 @@ By default Singularity tries to create a seamless user experience between the ho
 ```shell
 [z301@training-z301 ~]$ pwd
 /home/z301
-[z301@training-z301 ~]$ singularity shell /local/centos.img 
+[z301@training-z301 ~]$ singularity shell /local/centos.img
 #Singularity: Invoking an interactive shell within container...
 
 Singularity centos.img:~> pwd
@@ -110,7 +110,7 @@ LAMMPS is a popular Molecular Dynamics code, a Singularity image for LAMMPS code
 
 ```shell
 wget -O ./in.granregion.mixer https://goo.gl/axtEQ7
-singularity run /local/lammps.img -i $HOME/in.granregion.mixer 
+singularity run /local/lammps.img -i $HOME/in.granregion.mixer
 # or to run the example problem from the Host /lammp directory
 singularity run --bind /lammps:/lammps /local/lammps.img -i /lammps/in.granregion.mixer
 ```
@@ -122,11 +122,11 @@ srun -Atraining -pbiocloud-normal singularity run ~/lammps.img -i ~/in.mixer
 
 ## Writing in the container
 
-While it is discouraged to make tweaks on the fly to containers (you should properly define all edits to the container in a boostrap specification file, shown later) you can add `--writable` to any command to write inside the container. Assuming we have our `centos.img` on our local resource with `sudo`, let’s 
+While it is discouraged to make tweaks on the fly to containers (you should properly define all edits to the container in a boostrap specification file, shown later) you can add `--writable` to any command to write inside the container. Assuming we have our `centos.img` on our local resource with `sudo`, let’s
 try to make a `/data` directory:
 
 ```shell
-sudo singularity shell --writable centos7.img
+sudo singularity shell --writable /local/centos.img
 Singularity centos.img:~> mkdir /data
 Singularity centos.img:~> touch /data/foo.txt
 Singularity centos.img:~> exit
@@ -135,4 +135,3 @@ singularity exec /local/centos.img ls /data
 #foo.txt
 ```
 > **Info** We would ideally have done this action with bootstrap, discussed next.
-
