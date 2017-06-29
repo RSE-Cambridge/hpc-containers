@@ -61,13 +61,13 @@ make -j serial |& tee log.make_serial
 * Create a container called `lammps` and modify the size to 2048 MiB.
 
 ```
-singularity create --size 2048 lammps.img`
+singularity create --size 2048 /local/lammps.img`
 ```
 
 * Bootstrap the lammps configuration file created in the previous step.
 
 ```
-sudo singularity boostrap lammps.img lammps.cfg
+sudo singularity boostrap /local/lammps.img lammps.cfg
 ```
 > **Note** Bootstrapping step requires `root` access.
 
@@ -76,5 +76,5 @@ sudo singularity boostrap lammps.img lammps.cfg
 To execute the container 
 
 ```
-singularity run ~/lammps.img -i in.granregion.mixer
+singularity run /local/lammps.img -i in.granregion.mixer
 ```
