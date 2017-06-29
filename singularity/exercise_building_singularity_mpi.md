@@ -74,3 +74,9 @@ To execute the container
 ```
 mpirun -np 4 singularity run ~/lammps-mpi.img -i in.granregion.mixer
 ```
+
+To run LAMMPS on Cambridge HPC
+
+```shell
+srun -Atraining -pbiocloud-normal --reservation=singularity --mpi=pmi2 singularity run ~/lammps.img -i ~/in.mixer
+```

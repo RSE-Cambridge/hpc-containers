@@ -11,13 +11,13 @@ singularity pull --name centos.img shub://singularityhub/centos
 Singularity shell allows you to interact with the container.
 
 ```shell
-singularity shell ~/centos.img
+singularity shell /local/centos.img
 singularity centos.img:~/> uname -a
 
 # Check user privileges
 singularity centos.img:~/> whoami
 # Now try running as root
-sudo singularity shell ~/centos.img
+sudo singularity shell /local/centos.img
 singularity centos.img:~/> whoami
 
 # Create a file in home directory
@@ -28,29 +28,29 @@ created in your home directory. If you want to keep the container’s environmen
 contained, meaning no sharing of host environment, use `--contain`
 
 ```shell
-singularity shell --contain ~/centos.img
+singularity shell --contain /local/centos.img
 # create some files in your home, are they persistent?
 singularity centos.img:~/> touch ~/test
 singularity centos.img:~/> exit
 # Contain but define a new directory to use for your home
-singularity shell --contain --home ~/git ~/centos.img
+singularity shell --contain --home ~/git /local/centos.img
 singularity centos.img:~/> touch ~/test
 ```
 
 ## Singularity exec
 To run commands directly from a container, use `singularity exec`:
 ```
-singularity exec ~/centos.img echo "Hello Singularity!"
-singularity exec ~/centos.img factor 54321
+singularity exec /local/centos.img echo "Hello Singularity!"
+singularity exec /local/centos.img factor 54321
 ```
 
 To enable debugging, use `--debug` flag
 ```
-singularity --debug exec ~/centos.img whoami
+singularity --debug exec /local/centos.img whoami
 ```
 To launch the container as a separate process use `-p` flag
 ```
-singularity exec -p ~/centos.img factor 12345
+singularity exec -p /local/centos.img factor 12345
 ```
 
 ### Environments
@@ -58,10 +58,10 @@ Singularity passes the Host environment to the container.
 
 ```shell
 # How is the shell environment transposed into the container?
-singularity exec ~/centos.img env
-singularity exec ~/centos.img env | wc -l
-env -i singularity exec ~/centos.img env | wc -l
-env -i FOO=BAR singularity exec ~/centos.img en
+singularity exec /local/centos.img env
+singularity exec /local/centos.img env | wc -l
+env -i singularity exec /local/centos.img env | wc -l
+env -i FOO=BAR singularity exec /local/centos.img en
 ```
 
 ## Directory access
@@ -89,7 +89,7 @@ Files on the host can be reachable from within the container
 
 ```shell
 echo "Hello World" > $HOME/hello.txt
-singularity exec ~/centos.img cat $HOME/hello.txt
+singularity exec /local/centos.img cat $HOME/hello.txt
 Hello World
 ```
 
@@ -100,7 +100,7 @@ On a research cluster, you probably want to access locations with big datasets, 
 sudo mkdir /lammps
 sudo wget -O /lammps/in.granregion.mixer https://goo.gl/axtEQ7
 # Launch container
-singularity shell --bind /lammps:/lammps ~/centos.img
+singularity shell --bind /lammps:/lammps /local/centos.img
 Singularity centos.img:~> ls -alh /lammps
 #in.granregion.mixer
 ```
@@ -115,6 +115,11 @@ singularity run /local/lammps.img -i $HOME/in.granregion.mixer
 singularity run --bind /lammps:/lammps /local/lammps.img -i /lammps/in.granregion.mixer
 ```
 
+To run LAMMPS on Cambridge HPC
+```shell
+srun -Atraining -pbiocloud-normal singularity run ~/lammps.img -i ~/in.mixer
+```
+
 ## Writing in the container
 
 While it is discouraged to make tweaks on the fly to containers (you should properly define all edits to the container in a boostrap specification file, shown later) you can add `--writable` to any command to write inside the container. Assuming we have our `centos.img` on our local resource with `sudo`, let’s 
@@ -126,7 +131,7 @@ Singularity centos.img:~> mkdir /data
 Singularity centos.img:~> touch /data/foo.txt
 Singularity centos.img:~> exit
 # We made data & foo! But after we exit, is the file still there?
-singularity exec ~/centos.img ls /data
+singularity exec /local/centos.img ls /data
 #foo.txt
 ```
 > **Info** We would ideally have done this action with bootstrap, discussed next.
