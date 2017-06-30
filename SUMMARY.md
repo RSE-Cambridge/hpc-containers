@@ -10,4 +10,5 @@
     * [Hands-on #3](singularity/exercise_building_singularity_mpi.md)
   * [Building a container: Docker](singularity/from-docker.md)
     * [Hands-on #4](singularity/exercise_building_singularity_docker.md)
+  * [Hands-on #5: TensorFlow and GPU](singularity/exercise_running_tensorflow.md)
 
