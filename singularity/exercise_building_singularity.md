@@ -67,7 +67,7 @@ singularity create --size 2048 /local/lammps.img`
 * Bootstrap the lammps configuration file created in the previous step.
 
 ```
-sudo singularity boostrap /local/lammps.img lammps.cfg
+sudo singularity bootstrap /local/lammps.img lammps.cfg
 ```
 > **Note** Bootstrapping step requires `root` access.
 
